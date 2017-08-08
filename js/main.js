@@ -69,7 +69,7 @@ function dibujarLaberinto() {
     
 arriba.onclick = function(){
 	if (posicion.direccion == "arriba") {
-		if (mapa[posicion.x-1][posicion.y] == "_"){
+		if (mapa[posicion.x-1][posicion.y] == "_" ){
 		  var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
 		  imagen.src = 'img/arriba.gif';
 		  celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
@@ -77,6 +77,7 @@ arriba.onclick = function(){
 		  celditas[posicion.x][posicion.y].appendChild(imagen);
             
         }
+       
 }
     
 else if (posicion.direccion == "derecha") {
@@ -100,16 +101,26 @@ else if (posicion.direccion == "izquierda") {
 }
 
 else if (posicion.direccion == "abajo") {
-	if (mapa[posicion.x+1][posicion.y] == "_"){
+	if (mapa[posicion.x+1][posicion.y] == "_" ){
 		var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
 		imagen.src = 'img/abajo.gif';
 		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
 		posicion.x = posicion.x+1;
 		celditas[posicion.x][posicion.y].appendChild(imagen);
   }
+     if( mapa[posicion.x+1][posicion.y] == "W"){
+         var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
+		imagen.src = 'img/abajo.gif';
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		posicion.x = posicion.x+1;
+		celditas[posicion.x][posicion.y].appendChild(imagen);   
+         alert("terminaste!! =)");
+        }
  }
     
+    
 }
+
 
 derecha.onclick = function(){
 	if (posicion.direccion == "arriba") {
