@@ -1,4 +1,13 @@
-   var mapa=[
+var arriba = document.getElementById('btnArriba');
+var izquierda = document.getElementById('btnIzquierda');
+var derecha = document.getElementById('btnDerecha');
+/*var abajo = document.getElementById('btnAbajo');*/
+var posicion;
+/*var x,y;*/
+
+
+
+var mapa=[
     "******************",
     "*_________*______*",
     "*_*****_____******",
@@ -11,95 +20,160 @@
     "*_*__*________**_*",
     "*o**************W*"];
 
-var player = { 
-    x: 1,
-    y: 8
-};
+var celditas = new Array(mapa.length);
+for (var i=0;i<mapa.length;i++){
+	celditas[i]= new Array(mapa[0].length);
+}
 
-    var laberitnto = document.getElementById("laberinto");
-
-    function dibujarLaberinto() {
-        var tabla = document.createElement('table');
-        tabla.border = "1";
-        for (var i = 0; i < mapa.length; i++) {
-            var fila = document.createElement('tr');
-            for (var j = 0; j < mapa[i].length; j++) {
-                var celda = document.createElement('td');
-                if (mapa[i][j] == "*") {
-                    celda.setAttribute('class', 'negro');
-                }
-                else if (mapa[i][j] == "_"){
-                    celda.setAttribute('class', 'amarillo');
-                }
-                else if (mapa[i][j] == "o"){
-                    celda.setAttribute('class', 'verde');
-                    var imagen = document.createElement("img");//creo la etiqueta img  en imagen...
-		          imagen.src = "icono3.gif";//se inserta imagen
-                  celda.appendChild(imagen);//se agrega la imagen en el td
-
-                }
-                else if (mapa[i][j] == "W"){
-                    celda.setAttribute('class', 'rojo');
-                }
-
-                var p = document.createElement('p');
-                p.innerHTML = mapa[i][j];
-                celda.appendChild(p);
-
-                fila.appendChild(celda);
-            }
-            tabla.appendChild(fila);
+function dibujarLaberinto() {
+    var tabla = document.createElement('table');
+    
+    for (var i = 0; i < mapa.length; i++) {
+        var tr = document.createElement('tr');
+        for (var j = 0; j < mapa[0].length; j++) {
+         var td = document.createElement('td');
+          if (mapa[i][j] == "*") {
+              td.setAttribute('class', 'pared');
+          }
+          else if (mapa[i][j] == "_"){
+           td.setAttribute('class', 'camino');
+          }
+          else if (mapa[i][j] == "o"){
+           td.setAttribute('class', 'inicio');
+           posicion={
+               x:i,
+               y:j,
+               direccion:'arriba'
+           };
+         
+              var imagen = document.createElement("img");
+		      imagen.src = "img/arriba.gif";//se inserta imagen
+              td.appendChild(imagen);//se agrega la imagen en el td 
         }
-        laberinto.appendChild(tabla);
-
-      }
+        else if (mapa[i][j] == "W"){
+            td.setAttribute('class', 'fin');
+        }
+            tr.appendChild(td);
+            celditas[i][j] = td;
+                
+    }
+        tabla.appendChild(tr);
+  }
+    
+    laberinto.appendChild(tabla);
+    /*var imagen = document.createElement("img");
+    imagen.src = "icono3.gif";//se inserta imagen
+    celda.appendChild(imagen);//se agrega la imagen en el td*/
+}
   dibujarLaberinto();
     
-
-function updateMap() {
-    var displayMap = [], x, y;
-    for (y = 0; y < mapa.length; y += 1) {
-        displayMap[y] = displayMap[y] || [];
-        for (x = 0; x < mapa[y].length; x += 1) {
-            displayMap[y][x] = mapa[y][x];
-        }
-    }
-    displayMap[player.y][player.x] = '@';
-    for (y = 0; y < displayMap.length; y += 1) {
-        displayMap[y] = displayMap[y].join('');
-    }
-      //dibujarLaberinto();
-    //laberinto.innerHTML = mapaToHTML(displayMap);
+arriba.onclick = function(){
+	if (posicion.direccion == "arriba") {
+		if (mapa[posicion.x-1][posicion.y] == "_"){
+		  var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
+		  imagen.src = 'img/arriba.gif';
+		  celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		  posicion.x = posicion.x-1;
+		  celditas[posicion.x][posicion.y].appendChild(imagen);
+   }
 }
-function playerMove(x, y) {
-    var toX = player.x + x, toY = player.y + y;
-    if (mapa[toY][toX] === '.' || mapa[toY][toX] === 'X') {
-        player.x = toX;
-        player.y = toY;
-    }
-    updateMap();
-    if (mapa[toY][toX] === 'X') {
-        laberitnto.innerHTML = 'YOU WIN';
-        document.getElementById('buttons').innerHTML = '';
-    }
+    
+else if (posicion.direccion == "derecha") {
+	if (mapa[posicion.x][posicion.y+1] == "_"){
+		var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
+		imagen.src = 'img/derecha.gif';
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		posicion.y = posicion.y+1;
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+  }
 }
 
-   
- 
-
-for (i = 0; i < mapa.length; i += 1) {
-    mapa[i] = mapa[i].split('');
+else if (posicion.direccion == "izquierda") {
+	if (mapa[posicion.x][posicion.y-1] == "_"){
+		var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
+		imagen.src = 'img/izquierda.gif';
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		posicion.y = posicion.y-1;
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+  }
 }
-document.getElementById('btnArriba').onclick = function () {
-    playerMove(0, -1);
-};
-document.getElementById('btnAbajo').onclick = function () {
-    playerMove(0, 1);
-};
-document.getElementById('btnDerecha').onclick = function () {
-    playerMove(1, 0);
-};
-document.getElementById('btnIzquierda').onclick = function () {
-    playerMove(-1, 0);
-};
-updateMap();
+
+else if (posicion.direccion == "abajo") {
+	if (mapa[posicion.x+1][posicion.y] == "_"){
+		var imagen = document.createElement('img');//creo la etiqueta img  en imagen...
+		imagen.src = 'img/abajo.gif';
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		posicion.x = posicion.x+1;
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+  }
+ }
+    
+}
+
+derecha.onclick = function(){
+	if (posicion.direccion == "arriba") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/derecha.gif";
+		posicion.direccion = "derecha";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+	else if (posicion.direccion == "derecha") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/abajo.gif";
+		posicion.direccion = "abajo";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+
+	else if (posicion.direccion == "abajo") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/izquierda.gif";
+		posicion.direccion = "izquierda";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+
+	else if (posicion.direccion == "izquierda") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/arriba.gif";
+		posicion.direccion = "arriba";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+}
+
+izquierda.onclick = function(){
+	if (posicion.direccion == "arriba") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/izquierda.gif";
+		posicion.direccion = "izquierda";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+
+	else if (posicion.direccion == "derecha") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/arriba.gif";
+		posicion.direccion = "arriba";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+
+	/*else if (posicion.direccion == "abajo") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/derecha.gif";
+		posicion.direccion = "derecha";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}*/
+
+	else if (posicion.direccion == "izquierda") {
+		var imagen = document.createElement("img");
+	  imagen.src =  "img/abajo.gif";
+		posicion.direccion = "abajo";
+		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
+		celditas[posicion.x][posicion.y].appendChild(imagen);
+	}
+}
+
