@@ -75,7 +75,8 @@ arriba.onclick = function(){
 		  celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
 		  posicion.x = posicion.x-1;
 		  celditas[posicion.x][posicion.y].appendChild(imagen);
-   }
+            
+        }
 }
     
 else if (posicion.direccion == "derecha") {
