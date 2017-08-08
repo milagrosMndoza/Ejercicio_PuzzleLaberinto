@@ -1,7 +1,7 @@
 var arriba = document.getElementById('btnArriba');
 var izquierda = document.getElementById('btnIzquierda');
 var derecha = document.getElementById('btnDerecha');
-/*var abajo = document.getElementById('btnAbajo');*/
+var abajo = document.getElementById('btnAbajo');
 var posicion;
 /*var x,y;*/
 
@@ -160,13 +160,13 @@ izquierda.onclick = function(){
 		celditas[posicion.x][posicion.y].appendChild(imagen);
 	}
 
-	/*else if (posicion.direccion == "abajo") {
+	else if (posicion.direccion == "abajo") {
 		var imagen = document.createElement("img");
 	  imagen.src =  "img/derecha.gif";
 		posicion.direccion = "derecha";
 		celditas[posicion.x][posicion.y].removeChild(celditas[posicion.x][posicion.y].firstChild);
 		celditas[posicion.x][posicion.y].appendChild(imagen);
-	}*/
+	}
 
 	else if (posicion.direccion == "izquierda") {
 		var imagen = document.createElement("img");
