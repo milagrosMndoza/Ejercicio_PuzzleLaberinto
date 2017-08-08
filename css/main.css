@@ -4,34 +4,20 @@
     body{
         
         background-color: #2A9CF9;
-        background-image: url(../fondo.png);
+        background-image: url(../img/fondo.png);
         background-size: cover;
     }
 
     h1{
-        font-size: 90px;
+        margin: 0;
+        font-size: 100px;
         font-family: 'Londrina Solid', cursive;
         color: #E97814;
         text-shadow: black -7px 0;
         /*background-image: url(../)*/
     }
 
-    .negro{
-        background-image: url(../celda.png);
-
-    }
-    .amarillo{
-        background: black;
-        background-image: url(../camino.png);
-    }
-    .verde{
-        background: green;
-    }
-    .rojo{
-        background: red;
-    }
-
-    td{
+  td{
         width: 80px;
         height: 80px;
         position: inherit;
@@ -47,7 +33,7 @@
         color: #ECECEC;
         float: center;
         text-align: center;
-        font-size: 16px;
+        font-size: 18px;
         cursor: pointer;
         transition: 0.5s;
     }
@@ -56,3 +42,24 @@
         background-color: #F9E00B;
     }
 
+
+    .pared{
+        background-image: url(../img/celda.png);
+
+    }
+    .camino{
+        
+        background-image: url(../img/camino.png);
+    }
+    .inicio{
+        background: green;
+        background-image: url(../img/inicio.png);
+    }
+    .fin{
+        background: red;
+        background-image: url(../img/fin.png);
+    }
+
+   
+
+   
